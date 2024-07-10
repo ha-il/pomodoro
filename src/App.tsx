@@ -1,0 +1,71 @@
+import { useEffect, useState } from "react";
+import GlobalStyle from "./styles/GlobalStyle";
+
+function App() {
+  const [minute, setMinute] = useState(25);
+  const [second, setSecond] = useState(0);
+  const [round, setRound] = useState(0);
+  const [goal, setGoal] = useState(0);
+  const [isPlaying, setIsPlaying] = useState(false);
+
+  useEffect(() => {
+    let interval: number | undefined;
+    if (isPlaying) {
+      interval = setInterval(() => {
+        setSecond((prevSecond) => {
+          if (prevSecond === 0) {
+            if (minute === 0) {
+              if (round === 3) {
+                setGoal((prevGoal) => prevGoal + 1);
+                setRound(0);
+                setMinute(25);
+                setSecond(0);
+              } else {
+                setRound((prevRound) => prevRound + 1);
+                setMinute(25);
+                setSecond(0);
+              }
+            } else {
+              setMinute((prevMinute) => prevMinute - 1);
+              return 59;
+            }
+          } else {
+            return prevSecond - 1;
+          }
+          return prevSecond;
+        });
+      }, 1000);
+    } else if (!isPlaying && minute !== 0 && second !== 0) {
+      clearInterval(interval);
+    }
+
+    return () => clearInterval(interval);
+  }, [isPlaying, minute, second, round, goal]);
+
+  const handleBtnClick = () => {
+    setIsPlaying((c) => !c);
+  };
+
+  return (
+    <>
+      <GlobalStyle />
+      <h1>Pomodoro</h1>
+      <div>
+        <span>{minute}</span>
+        <span>:</span>
+        <span>{second}</span>
+      </div>
+      <button onClick={handleBtnClick}>재생</button>
+      <div>
+        <div>{round}/4</div>
+        <div>ROUND</div>
+      </div>
+      <div>
+        <div>{goal}/12</div>
+        <div>GOAL</div>
+      </div>
+    </>
+  );
+}
+
+export default App;
