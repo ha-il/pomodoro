@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 
-const DEFAULT_MINUTES = 1;
-const DEFAULT_SECONDS = 5;
+const DEFAULT_MINUTES = 25;
+const DEFAULT_SECONDS = 59;
 
 export default function useTimer() {
   const [minute, setMinute] = useState(DEFAULT_MINUTES);
