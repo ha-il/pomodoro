@@ -13,11 +13,19 @@ export default function Timer() {
     <Container>
       <Title>Pomodoro</Title>
       <TimerDisplay>
-        <TimeUnit key={minute} initial={{ scale: 0.5 }} animate={{ scale: 1 }}>
+        <TimeUnit
+          key={minute !== 0 ? minute : "minute"}
+          initial={{ scale: 0.5 }}
+          animate={{ scale: 1 }}
+        >
           {String(minute).padStart(2, "0")}
         </TimeUnit>
         <span>:</span>
-        <TimeUnit key={second} initial={{ scale: 0.5 }} animate={{ scale: 1 }}>
+        <TimeUnit
+          key={second !== 0 ? second : "second"}
+          initial={{ scale: 0.5 }}
+          animate={{ scale: 1 }}
+        >
           {String(second).padStart(2, "0")}
         </TimeUnit>
       </TimerDisplay>
